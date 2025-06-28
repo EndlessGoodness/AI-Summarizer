@@ -3,8 +3,10 @@ import {
   createUserContent,
   createPartFromUri,
 } from "@google/genai";
+import { marked } from "marked";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+let chat = null;
 
 async function sendFileToGemini(file) {
   // Upload the file to Gemini
@@ -24,23 +26,45 @@ async function sendFileToGemini(file) {
         throw new Error('File processing failed.');
     }
 
-    const content = [
-        'Summarize this document in 70 words',
-    ];
+    // After file is uploaded and processed:
+    if (getFile.uri && getFile.mimeType) {
+        chat = ai.chats.create({
+            model: "gemini-2.5-flash",
+            history: [],
+        });
 
-    if (uploadedfile.uri && uploadedfile.mimeType) {
-        const fileContent = createPartFromUri(uploadedfile.uri, uploadedfile.mimeType);
-        content.push(fileContent);
+        const content = [
+            "Summarize this document in 70 words",
+            createPartFromUri(getFile.uri, getFile.mimeType)
+        ];
+
+        const response1 = await chat.sendMessage({
+            message: content,
+        });
+
+        const name = document.getElementById('text');
+        name.innerHTML = marked.parse(response1.text);
     }
-  // Generate content using the uploaded file
-  const response = await ai.models.generateContent({
-        model: 'gemini-2.5-flash',
-        contents: content,
-    });
 
-    console.log(response.text);
-  const name=document.getElementById('text');
-  name.innerHTML=response.text.replace(/\n/g, "<br>");
+ const submit= document.getElementById("submit-button");
+submit.addEventListener("click",async ()=>{
+  if (!chat) return; // Prevent error if chat is not ready
+  const ques = document.getElementById("user-question");
+  const anse=ques.value;
+  const response2=await chat.sendMessage({
+    message:anse,
+  });
+  const text1=document.getElementById("ans");
+  text1.innerHTML = marked.parse(response2.text);
+ });
+
+ const reset = document.getElementById("reset");
+ reset.addEventListener("click", () => {
+  chat = null;
+  document.getElementById("text").innerHTML = "";
+  document.getElementById("ans").textContent = "";
+  document.getElementById("user-question").value = ""; // Clear the input
+ });
 }
 
 export function makebig() {
@@ -130,6 +154,11 @@ function makeright() {
   const summary = document.createElement("h2");
   summary.textContent = "Summary";
   right.appendChild(summary);
+
+  const reset=document.createElement("button");
+  reset.setAttribute("id","reset");
+  reset.textContent = "Reset";
+  right.appendChild(reset);
 
   const tex = document.createElement("p");
   tex.setAttribute('id', 'text');

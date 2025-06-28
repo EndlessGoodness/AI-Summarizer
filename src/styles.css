@@ -1,3 +1,11 @@
+body, html {
+    background: linear-gradient(135deg, #f8fafc 0%, #e9eaf6 100%);
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    color: #23244a;
+    margin: 0;
+    padding: 0;
+}
+
 .header{
     text-align: center;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
@@ -36,19 +44,61 @@
 
 .right{
     background: #fff;
-    padding: 2rem;
-    min-height: 200px;
-    border-radius: 12px;
-    box-shadow: 0 2px 8px #0001;
-    margin-bottom: 0;
+    border-radius: 18px;
+    box-shadow: 0 6px 32px 0 #23244a11;
+    padding: 2rem 2.5rem 2.5rem 2.5rem;
+    position: relative;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 0.5rem 1.5rem 0.5rem;
+    margin-bottom: 1.2rem;
+}
+
+.input-section label {
+    font-size: 1rem;
+    color: #23244a;
+    margin-bottom: 0.3rem;
+    font-weight: 500;
 }
 
 .inpu{
-    padding: 0.7rem 1rem;
+    background: #f8fafd;
+    border: 1.5px solid #bdbddd;
     border-radius: 8px;
-    border: 1px solid #bdbddd;
     font-size: 1rem;
+    padding: 0.7rem 1rem;
     margin-bottom: 0.5rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    color: #23244a;
+}
+
+.inpu:focus {
+    border-color: #23244a;
+    outline: none;
+    box-shadow: 0 2px 8px #bdbddd33;
+}
+
+.input-section button {
+    background: linear-gradient(90deg, #23244a 60%, #4e54c8 100%);
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 0.7rem 2rem;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #0002;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.input-section button:hover {
+    background: linear-gradient(90deg, #18192b 60%, #23244a 100%);
+    transform: translateY(-2px) scale(1.03);
 }
 
 .allt{
@@ -76,7 +126,7 @@
 }
 
 .upload-btn {
-    background: #18192b;
+    background: linear-gradient(90deg, #23244a 60%, #4e54c8 100%);
     color: #fff;
     font-weight: bold;
     border: none;
@@ -89,10 +139,11 @@
     align-items: center;
     gap: 0.5rem;
     box-shadow: 0 2px 8px #0002;
-    transition: background 0.2s;
+    transition: background 0.2s, transform 0.1s;
 }
 .upload-btn:hover {
-    background: #23244a;
+    background: linear-gradient(90deg, #18192b 60%, #23244a 100%);
+    transform: translateY(-2px) scale(1.03);
 }
 
 .upload-icon {
@@ -107,8 +158,13 @@
     line-height: 1.4;
 }
 
-h2{
-    text-align: center;
+h2 {
+    font-family: 'Montserrat', 'Segoe UI', Arial, sans-serif;
+    font-size: 2rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    color: #23244a;
+    margin-bottom: 1.5rem;
 }
 
 .summary-text {
@@ -117,30 +173,67 @@ h2{
     color: #23244a;
     line-height: 1.6;
     min-height: 60px;
+    max-height: fit-content;
+    word-break: break-word;      /* Ensures long words wrap */
+    max-width: 100%;             /* Prevents overflow */
+    white-space: pre-line;       /* Preserves line breaks */
 }
 
+.summary-text pre, .summary-text code {
+    white-space: pre-wrap;       /* Allows code blocks to wrap */
+    word-break: break-word;
+    font-family: 'Fira Mono', 'Consolas', monospace;
+    font-size: 1em;
+}
+
+#reset {
+    display: inline-block;
+    margin-left: auto;
+    margin-bottom: 1.5rem;
+    float: right;
+    background: #f5f5fa;
+    color: #23244a;
+    border: 1px solid #bdbddd;
+    border-radius: 8px;
+    padding: 0.5rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 8px #bdbddd22;
+}
+#reset:hover {
+    background: #23244a;
+    color: #fff;
+}
+
+/* Subtle divider */
 .right-divider {
     border: none;
-    border-top: 1px solid #eee;
-    margin: 0 2rem;
+    border-top: 2.5px solid #bdbddd;
+    margin: 2rem 0 1.5rem 0;
+    width: 100%;
+    box-shadow: 0 2px 8px #bdbddd33;
+    border-radius: 2px;
+    background: #bdbddd;
 }
 
-.input-section {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 0 2rem;
+/* Subtle shadow for left panel */
+.board {
+    background: #fafafd;
+    border-radius: 18px;
+    box-shadow: 0 6px 32px 0 #23244a11;
+    border: 2px dashed #bdbddd;
+    transition: box-shadow 0.2s, border-color 0.2s;
 }
 
-.answer-section {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding: 0 2rem;
+/* Custom scrollbar for modern look */
+::-webkit-scrollbar {
+    width: 8px;
+    background: #f5f5fa;
+    border-radius: 8px;
 }
-
-.answer-text {
-    min-height: 40px;
-    color: #444;
-    font-size: 1.05rem;
+::-webkit-scrollbar-thumb {
+    background: #bdbddd;
+    border-radius: 8px;
 }
