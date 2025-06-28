@@ -1,0 +1,146 @@
+.header{
+    text-align: center;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+.big{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100vh;
+}
+
+.board, .right {
+    flex: 1;
+    min-width: 0;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+.board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #bdbddd;
+    border-radius: 18px;
+    background: #fafafd;
+    box-shadow: 0 4px 24px 0 #0001;
+    margin: 2rem;
+    height: 80%;
+}
+
+.board.dragover {
+    border-color: #23244a;
+    background: #f0f0fa;
+}
+
+.right{
+    background: #fff;
+    padding: 2rem;
+    min-height: 200px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px #0001;
+    margin-bottom: 0;
+}
+
+.inpu{
+    padding: 0.7rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #bdbddd;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.allt{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    box-sizing: border-box;
+    border-left: 1px solid #ddd;
+    padding: 2rem 0;
+    gap: 2rem;
+}
+
+.upload-heading {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #18192b;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.upload-or {
+    color: #888;
+    margin: 0.5rem 0 1rem 0;
+    font-size: 1rem;
+}
+
+.upload-btn {
+    background: #18192b;
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    padding: 1rem 2rem;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 8px #0002;
+    transition: background 0.2s;
+}
+.upload-btn:hover {
+    background: #23244a;
+}
+
+.upload-icon {
+    font-size: 1.2rem;
+}
+
+.upload-info {
+    color: #888;
+    font-size: 0.95rem;
+    text-align: center;
+    margin-top: 0.5rem;
+    line-height: 1.4;
+}
+
+h2{
+    text-align: center;
+}
+
+.summary-text {
+    margin-top: 1rem;
+    font-size: 1.1rem;
+    color: #23244a;
+    line-height: 1.6;
+    min-height: 60px;
+}
+
+.right-divider {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 0 2rem;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 2rem;
+}
+
+.answer-section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0 2rem;
+}
+
+.answer-text {
+    min-height: 40px;
+    color: #444;
+    font-size: 1.05rem;
+}
