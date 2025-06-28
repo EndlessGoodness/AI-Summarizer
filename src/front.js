@@ -160,6 +160,10 @@ function makeright() {
   lakh.setAttribute("placeholder", "Type your question...");
   inputSection.appendChild(lakh);
 
+  const butt =document.createElement("button");
+  butt.textContent="Submit";
+  inputSection.appendChild(butt);
+  butt.setAttribute("id","submit-button");
   allt.appendChild(inputSection);
 
   // Answer Section
