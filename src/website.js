@@ -3,7 +3,7 @@ function makeheader(){
     const header=document.createElement("header");
     header.classList.add("header");
     const name=document.createElement("h1");
-    name.textContent="AI Summarizer";
+    name.textContent="InsightDoc";
     header.appendChild(name);
     return header;
 }
