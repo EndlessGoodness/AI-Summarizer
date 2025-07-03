@@ -12,7 +12,9 @@ AI Summarizer is a modern web application that allows users to upload PDF docume
 
 ## Screenshots
 
-![AI Summarizer Screenshot](image.png)
+![AI Summarizer Screenshot](![image](https://github.com/user-attachments/assets/b84f9d63-01d4-493f-b031-dc2379d09f47)
+)
+
 
 ## Getting Started
 
