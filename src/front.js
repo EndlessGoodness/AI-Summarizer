@@ -4,9 +4,15 @@ import {
   createPartFromUri,
 } from "@google/genai";
 import { marked } from "marked";
+import extractTextFromPDF from "./extract";
+import { loadUSEModel, embedTexts } from "./embedding";
+import { cosineSimilarity } from "./embedding";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 let chat = null;
+let chunks = [];
+let chunkEmbeddings = [];
+let model = null;
 
 async function sendFileToGemini(file) {
   // Upload the file to Gemini
@@ -46,25 +52,46 @@ async function sendFileToGemini(file) {
         name.innerHTML = marked.parse(response1.text);
     }
 
- const submit= document.getElementById("submit-button");
-submit.addEventListener("click",async ()=>{
-  if (!chat) return; // Prevent error if chat is not ready
-  const ques = document.getElementById("user-question");
-  const anse=ques.value;
-  const response2=await chat.sendMessage({
-    message:anse,
-  });
-  const text1=document.getElementById("ans");
-  text1.innerHTML = marked.parse(response2.text);
- });
+    const submit = document.getElementById("submit-button");
+    submit.addEventListener("click", async () => {
+      if (!chat || !model) return; // Prevent error if chat/model is not ready
+      const question = document.getElementById("user-question").value;
+      const [questionEmbedding] = await embedTexts(model, [question]);
+      const similarities = chunkEmbeddings.map(chunkEmb => cosineSimilarity(chunkEmb, questionEmbedding));
 
- const reset = document.getElementById("reset");
- reset.addEventListener("click", () => {
-  chat = null;
-  document.getElementById("text").innerHTML = "";
-  document.getElementById("ans").textContent = "";
-  document.getElementById("user-question").value = ""; // Clear the input
- });
+      // Get top-N most similar chunks
+    const topN = 3;
+    const topIndices = similarities
+      .map((sim, idx) => ({ sim, idx }))
+      .sort((a, b) => b.sim - a.sim)
+      .slice(0, topN)
+      .map(obj => obj.idx);
+
+    const retrievedChunks = topIndices.map(idx => chunks[idx]);
+
+    console.log('Similarities:', similarities);
+    console.log('Top Chunks:', retrievedChunks);
+
+    const response2=await chat.sendMessage({
+      message:`
+        Use the following context to answer the question:
+
+        ${retrievedChunks.join('\n\n')}
+
+        Question: ${question}
+        `,
+    });
+    const text1=document.getElementById("ans");
+    text1.innerHTML = marked.parse(response2.text);
+   });
+
+   const reset = document.getElementById("reset");
+   reset.addEventListener("click", () => {
+    chat = null;
+    document.getElementById("text").innerHTML = "";
+    document.getElementById("ans").textContent = "";
+    document.getElementById("user-question").value = ""; // Clear the input
+   });
 }
 
 export function makebig() {
@@ -94,6 +121,10 @@ function makeleft() {
     const files = e.dataTransfer.files;
     if (files.length > 0) {
       await sendFileToGemini(files[0]);
+      const para = await extractTextFromPDF(files[0]);
+      chunks = para.filter(p => p.trim().length > 0); // FIXED
+      model = await loadUSEModel();
+      chunkEmbeddings = await embedTexts(model, chunks);
     }
   });
 
@@ -130,6 +161,10 @@ function makeleft() {
     const files = e.target.files;
     if (files.length > 0) {
       await sendFileToGemini(files[0]);
+      const para = await extractTextFromPDF(files[0]);
+      chunks = para.filter(p => p.trim().length > 0); // FIXED: para is already an array
+      model = await loadUSEModel();
+      chunkEmbeddings = await embedTexts(model, chunks);
       fileInput.value = ""; // Reset input
     }
   });
