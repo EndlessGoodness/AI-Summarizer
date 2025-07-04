@@ -20,7 +20,8 @@ InsightDoc is a modern web application that allows users to upload PDF documents
 
 ## Screenshots
 
-![InsightDoc Screenshot](https://github.com/user-attachments/assets/b84f9d63-01d4-493f-b031-dc2379d09f47)
+![InsightDoc Screenshot](https://github.com/user-attachments/assets/90eb7125-736c-48b5-8586-6262784c1185)
+)
 
 ## Getting Started
 
